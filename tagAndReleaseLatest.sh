@@ -1,8 +1,21 @@
 num=0
-REPO=ITKR
+REPO=$1
+doRelease=$2
+GIT_TAG=latest
+if [[ ${#3} -gt 0 ]] ; then
+  GIT_TAG=$3
+fi
+if [[ ${#REPO} -eq 0  ]] ; then
+  echo usage:
+  echo $0 RepositoryName option GIT_TAG
+  echo GIT_TAG defaults to 'latest'
+  echo where option 0 indicates to delete GIT_TAG
+  echo where option 1 indicates to create and push GIT_TAG
+  echo where option 2 indicates to modify GIT_TAG notes
+  exit
+fi
 cd ~/code/${REPO}
 alltags=`git tag`
-GIT_TAG=latest
 for t in $alltags  ; do
   if [[ $t == $GIT_TAG ]] ; then
     if [ "$num" -ge 1 ]; then
@@ -19,7 +32,6 @@ for t in $alltags  ; do
   num=`expr $num + 1`
 done
 echo $num releases
-doRelease=$1
 if [[ ${#doRelease} -gt 0  ]] ; then
   if [[ ${doRelease} == 1  ]] ; then
     git tag $GIT_TAG -a -m 'latest/nightly version, may be unstable'
