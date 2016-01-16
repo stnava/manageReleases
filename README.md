@@ -21,6 +21,14 @@ bash ./tagAndReleaseLatest.sh ANTsR 2 latest
 This should produce binary packages on github for both ITKR and ANTsR, under
 the name of `latest`.
 
+TODO:
+
+* add build and push of manuals via `github-release`
+
+* add maintenance for code versioning ie making necessary changes to travis.yml and DESCRIPTION (and other files if necessary)
+
+* set up a cron job to manage this stuff ...
+
 dependencies include:
 
 * [go](https://golang.org)
