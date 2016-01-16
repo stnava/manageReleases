@@ -1,6 +1,25 @@
 # manageReleases
 
-Utilities for managing github releases and versions
+Utilities for managing github releases and versions.
+
+A basic work flow might be:
+
+```
+bash ./tagAndReleaseLatest.sh ITKR 0 latest
+bash ./tagAndReleaseLatest.sh ITKR 1 latest
+# wait for builds to finish and deploy
+sleep 3600
+bash ./tagAndReleaseLatest.sh ITKR 2 latest
+# now do ANTsR
+bash ./tagAndReleaseLatest.sh ANTsR 0 latest
+bash ./tagAndReleaseLatest.sh ANTsR 1 latest
+# wait for builds to finish and deploy
+sleep 3600
+bash ./tagAndReleaseLatest.sh ANTsR 2 latest
+```
+
+This should produce binary packages on github for both ITKR and ANTsR, under
+the name of `latest`.
 
 dependencies include:
 
