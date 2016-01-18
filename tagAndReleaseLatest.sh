@@ -41,11 +41,32 @@ fi
 
 if [[ ${#doRelease} -gt 0  ]] ; then
   if [[ ${doRelease} == 2  ]] ; then # fix with github-release
-  github-release edit \
-    --user stnava \
-    --repo ${REPO} \
-    --tag $GIT_TAG \
-    --name "Latest/nightly release" \
-    --description "The .tgz is the OSX binary and x86_64-pc-linux-gnu.tar.gz is the linux (via travis) binary.  You can see how these are created by looking at the travis.yml file."
+    # add manual
+    export reponame=${REPO}
+    rm ${REPO}.pdf
+    Rscript -e ' path <- find.package( Sys.getenv( c("reponame")));system(paste(shQuote(file.path(R.home("bin"), "R")),  "CMD", "Rd2pdf", shQuote(path)))'
+    github-release upload \
+      --user stnava \
+      --repo ${REPO} \
+      --tag $GIT_TAG \
+      --file ${REPO}.pdf \
+      -n ${REPO}-manual.pdf \
+      -l "R style manual"
+    # add vignettes
+    Rscript -e 'vgnnames=Sys.glob("vignettes/*Rmd"); for (x in vgnnames ) rmarkdown::render( x )'
+    for x in vignettes/*html; do
+      github-release upload \
+        --user stnava \
+        --repo ${REPO} \
+        --tag $GIT_TAG \
+        --file $x \
+        -n $x
+    done
+    github-release edit \
+      --user stnava \
+      --repo ${REPO} \
+      --tag $GIT_TAG \
+      --name "Latest/nightly release" \
+      --description "The .tgz is the OSX binary and x86_64-pc-linux-gnu.tar.gz is the linux (via travis) binary.  You can see how these are created by looking at the travis.yml file."
   fi
 fi

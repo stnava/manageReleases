@@ -23,10 +23,6 @@ the name of `latest`.
 
 TODO:
 
-* add build and push of manuals via `github-release`
-
-* same thing with vignettes
-
 * rework the website and point to some pics
 
 * add maintenance for code versioning ie making necessary changes to travis.yml and DESCRIPTION (and other files if necessary)
