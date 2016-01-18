@@ -35,7 +35,7 @@ echo $num releases
 if [[ ${#doRelease} -gt 0  ]] ; then
   if [[ ${doRelease} == 1  ]] ; then
     git tag $GIT_TAG -a -m 'latest/nightly version, may be unstable'
-    git push -q https://${GH_TOKEN}@github.com/stnava/${REPO} --tags
+    git push -q https://${GITHUB_TOKEN}@github.com/stnava/${REPO} --tags
   fi
 fi
 
